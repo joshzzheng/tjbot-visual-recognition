@@ -7,12 +7,12 @@ class WatsonVisualRecognition:
   end_point = "https://gateway-a.watsonplatform.net/visual-recognition/api"
   latest_version = '2016-05-20'
   
-  def __init__(self, end_point=end_point, version=latest_version, api_key=None):
+  def __init__(self, api_key, end_point=end_point, version=latest_version):
     self.api_key = api_key
     self.end_point = end_point
     self.version = version
 
-  def list_classifiers(self, api_key=None):
+  def list_classifiers(self, api_key):
     url = '/v3/classifiers'
     params = {'api_key': api_key, 'version': self.version}
 
@@ -23,14 +23,18 @@ class WatsonVisualRecognition:
       return response.json()['classifiers']
     return []
 
-  def get_classifier(self, classifier_id, api_key=None):
+  def get_classifier(self, api_key, classifier_id):
     url = '/v3/classifiers' + '/' + classifier_id
     params = {'api_key': api_key, 'version': self.version}
 
     return requests.get(self.end_point + url,
                         params=params).json()
 
-  def create_classifier(self, classifier_name, class_files, api_key=None):
+  def create_classifier(self, api_key, classifier_name, class_files):
+    '''
+    classifier_name: a string that's the name of the classifier
+    class_files: dictionary of {file_name: file}
+    '''
     url = '/v3/classifiers'
     params = {'api_key': api_key, 'version': self.version}
 
@@ -38,7 +42,7 @@ class WatsonVisualRecognition:
       'name': (None, classifier_name)
     }
 
-    for class_name, file in class_files.iteritems():
+    for class_name, file in class_files.items():
       files[class_name] = (class_name + ".zip",
                            file,
                            'application/zip')
@@ -48,7 +52,7 @@ class WatsonVisualRecognition:
                          params=params,
                         ).json()
 
-  def classify_image(self, classifier_ids, image_file=None, image_url="", threshold=0, api_key=None):
+  def classify_image(self, api_key, classifier_ids, image_file=None, image_url="", threshold=0):
     url = '/v3/classify'
     params = {'api_key': api_key, 'version': self.version}
 
@@ -75,7 +79,7 @@ class WatsonVisualRecognition:
                          files=files,
                          params=params).json()
 
-  def delete_classifier(self, classifier_id, api_key=None):
+  def delete_classifier(self, api_key, classifier_id):
     url = '/v3/classifiers/' + classifier_id
     params = {'api_key': api_key, 'version': self.version}
     response = requests.delete(self.end_point + url,
