@@ -20,10 +20,10 @@ def main():
                  '../data/training/cookie_monster.zip'), 'rb') as cookie_monster:
 
     response = sdk_vr.create_classifier("sesame_street", 
-                       elmo_positive_examples=elmo,
-                       big_bird_positive_examples=big_bird,
-                       kermit_positive_examples=kermit,
-                       cookie_monster_positive_examples=cookie_monster);
+                        elmo_positive_examples=elmo,
+                        big_bird_positive_examples=big_bird,
+                        kermit_positive_examples=kermit,
+                        cookie_monster_positive_examples=cookie_monster);
 
     pprint(response)
 
