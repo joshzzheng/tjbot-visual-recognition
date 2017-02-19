@@ -10,7 +10,7 @@ const vr = new VisualRecognitionV3({
 
 const camera = new RaspiCam({
   mode: "photo",
-  output: "./photo/image.jpg",
+  output: "photo/image.jpg",
   encoding: "jpg",
   timeout: 0 // take the picture immediately
 });
@@ -25,7 +25,7 @@ const formatTimestamp = (timestamp) => {
 
 const recognizeCharacter = (imagePath) => {
   const params = {
-    images_file: fs.createReadStream('../photo/image.jpg'),
+    images_file: fs.createReadStream('photo/image.jpg'),
     classifier_ids: [config.classifierId],
     threshold: 0
   }; 
