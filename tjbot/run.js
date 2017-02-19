@@ -38,7 +38,7 @@ const recognizeCharacter = (imagePath) => {
       let maxScore = classes[0].score
       let recognizedClass = classes[0].class
       for (let i=1; i<classes.length; i++) {
-        if classes[i].score > maxScore {
+        if (classes[i].score > maxScore) {
           maxScore = classes[i].score;
           recognizedClass = classes[i].class;
         }
