@@ -25,7 +25,7 @@ const formatTimestamp = (timestamp) => {
 
 const recognizeCharacter = (imagePath) => {
   const params = {
-    images_file: fs.createReadStream(imagePath),
+    images_file: fs.createReadStream('data/test/bigBird.png'),
     classifier_ids: [config.classifierId],
     threshold: 0
   }; 
