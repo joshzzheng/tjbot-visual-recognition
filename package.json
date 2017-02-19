@@ -4,6 +4,7 @@
   "description": "TJBot joins Sesame Street",
   "main": "config.example.js",
   "dependencies": {
+    "raspicam": "^0.2.13",
     "watson-developer-cloud": "^2.20.1"
   },
   "devDependencies": {},
