@@ -57,11 +57,11 @@ camera.on("start", function( err, timestamp ){
 camera.on("read", function( err, timestamp, filename ){
   console.log("photo image captured with filename: " + filename );
   camera.stop();
-  recognizeCharacter(config.imagePath);
 });
 
 camera.on("exit", function( timestamp ){
   console.log("photo child process has exited at " + formatTimestamp(timestamp) );
+  recognizeCharacter(config.imagePath);
 });
 
 camera.start();
