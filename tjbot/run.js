@@ -1,4 +1,4 @@
-const config = require('config.js')
+const config = require('../config.js')
 const RaspiCam = require('raspicam');
 const VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
 const fs = require('fs');
@@ -7,7 +7,11 @@ const vr = new VisualRecognitionV3({
   api_key: config.vrApiKey,
   version_date: '2016-05-19'
 });
+console.log("TEST")
 console.log(config.imagePath)
+console.log(config.classifierId);
+console.log("END")
+
 const camera = new RaspiCam({
   mode: "photo",
   output: config.imagePath,
