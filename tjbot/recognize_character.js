@@ -14,8 +14,10 @@ console.log(imageFile);
 
 const camera = new RaspiCam({
   mode: "photo",
+  width: 320,
+  height: 240,
+  quality: 20,
   output: imageFile,
-  quality: 10,
   encoding: "jpg",
   timeout: 0 // take the picture immediately
 });
@@ -50,13 +52,13 @@ const recognizeCharacter = () => {
       }
 
       if (recognizedClass == "elmo") {
-        return "Elmo";
+        console.log("Hello, Elmo");
       } else if (recognizedClass == "kermit") {
-        return "Kermit";
+        console.log("Hello, Kermit");
       } else if (recognizedClass == "big_bird") {
-        return "Big Bird";
+        console.log("Hello, Big Bird");
       } else {
-        return "Cookie Monster";
+        console.log("Hello, Cookie Monster");
       }
     }
   });
@@ -68,7 +70,7 @@ camera.on("start", function( err, timestamp ){
 
 camera.on("read", function( err, timestamp, filename ){
   console.log("photo image captured with filename: " + filename );
-  console.log("Hello, ", recognizeCharacter());
+  recognizeCharacter();
   camera.stop();
 });
 
