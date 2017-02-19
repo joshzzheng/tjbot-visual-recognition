@@ -9,15 +9,14 @@ const vr = new VisualRecognitionV3({
 });
 
 let ms = (new Date()).getTime().toString();
-let imageFilename = "image_" + ms + ".jpg";
-let imageFile = config.imagePath + imageFilename;
+let imageFile = config.imagePath + "image_" + ms + ".jpg";
 
 console.log(imageFilename);
 console.log(imageFile);
 
 const camera = new RaspiCam({
   mode: "photo",
-  output: './photos/wtf.jpg',
+  output: imageFile,
   encoding: "jpg",
   timeout: 0 // take the picture immediately
 });
@@ -30,9 +29,9 @@ const formatTimestamp = (timestamp) => {
   return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 }
 
-const recognizeCharacter = (imagePath) => {
+const recognizeCharacter = () => {
   const params = {
-    images_file: fs.createReadStream('./photos/wtf.jpg'),
+    images_file: fs.createReadStream(imageFile),
     classifier_ids: [config.classifierId],
     threshold: 0
   }; 
@@ -61,12 +60,12 @@ camera.on("start", function( err, timestamp ){
 
 camera.on("read", function( err, timestamp, filename ){
   console.log("photo image captured with filename: " + filename );
+  recognizeCharacter();
   camera.stop();
 });
 
 camera.on("exit", function( timestamp ){
   console.log("photo child process has exited at " + formatTimestamp(timestamp) );
-  recognizeCharacter(config.imagePath);
 });
 
 camera.start();
