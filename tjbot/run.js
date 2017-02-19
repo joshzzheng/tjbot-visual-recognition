@@ -8,8 +8,8 @@ const vr = new VisualRecognitionV3({
   version_date: '2016-05-19'
 });
 
-let timestamp = new Date().toISOString();
-let imageFilename = "image_" + timestamp + ".jpg";
+let ms = (new Date()).getTime().toString();
+let imageFilename = "image_" + ms + ".jpg";
 let imageFile = config.imagePath + imageFilename;
 
 console.log(imageFilename);
