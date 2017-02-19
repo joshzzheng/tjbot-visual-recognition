@@ -7,7 +7,7 @@ const vr = new VisualRecognitionV3({
   api_key: config.vrApiKey,
   version_date: '2016-05-19'
 });
-
+console.log(config.imagePath)
 const camera = new RaspiCam({
   mode: "photo",
   output: config.imagePath,
