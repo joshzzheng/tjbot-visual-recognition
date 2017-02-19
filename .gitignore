@@ -3,6 +3,7 @@ data/
 .DS_Store
 config.js
 node_modules/
+photo/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
