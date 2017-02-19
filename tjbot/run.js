@@ -17,7 +17,7 @@ console.log(imageFile);
 
 const camera = new RaspiCam({
   mode: "photo",
-  output: imageFile,
+  output: './photos/wtf.jpg',
   encoding: "jpg",
   timeout: 0 // take the picture immediately
 });
@@ -32,7 +32,7 @@ const formatTimestamp = (timestamp) => {
 
 const recognizeCharacter = (imagePath) => {
   const params = {
-    images_file: fs.createReadStream(imageFile),
+    images_file: fs.createReadStream('./photos/wtf.jpg'),
     classifier_ids: [config.classifierId],
     threshold: 0
   }; 
