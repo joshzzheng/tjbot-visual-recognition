@@ -45,6 +45,7 @@ camera.on("start", function( err, timestamp ){
 camera.on("read", function( err, timestamp, filename ){
   console.log("photo image captured with filename: " + filename );
   camera.stop();
+  recognizeCharacter(config.imagePath);
 });
 
 camera.on("exit", function( timestamp ){
