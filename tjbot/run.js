@@ -10,8 +10,6 @@ const vr = new VisualRecognitionV3({
 
 let ms = (new Date()).getTime().toString();
 let imageFile = config.imagePath + "image_" + ms + ".jpg";
-
-console.log(imageFilename);
 console.log(imageFile);
 
 const camera = new RaspiCam({
