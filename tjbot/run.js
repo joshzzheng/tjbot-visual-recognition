@@ -12,7 +12,7 @@ let timestamp = new Date().toISOString();
 let imageFile = config.imagePath + "image_" + timestamp + ".jpg";
 const camera = new RaspiCam({
   mode: "photo",
-  output: imageFile;,
+  output: imageFile,
   encoding: "jpg",
   timeout: 0 // take the picture immediately
 });
