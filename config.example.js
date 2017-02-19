@@ -27,4 +27,5 @@ exports.TTSPassword = '';
 
 //Credentials for Watson Visual Recognition service
 exports.vrApiKey = '';
-exports.classifierID = '';
+exports.classifierId = '';
+exports.imagePath = '';
