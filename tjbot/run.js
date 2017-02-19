@@ -15,6 +15,7 @@ console.log(imageFile);
 const camera = new RaspiCam({
   mode: "photo",
   output: imageFile,
+  quality: 50,
   encoding: "jpg",
   timeout: 0 // take the picture immediately
 });
