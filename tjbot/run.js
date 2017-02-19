@@ -9,7 +9,12 @@ const vr = new VisualRecognitionV3({
 });
 
 let timestamp = new Date().toISOString();
-let imageFile = config.imagePath + "image_" + timestamp + ".jpg";
+let imageFilename = "image_" + timestamp + ".jpg";
+let imageFile = config.imagePath + imageFilename;
+
+console.log(imageFilename);
+console.log(imageFile);
+
 const camera = new RaspiCam({
   mode: "photo",
   output: imageFile,
