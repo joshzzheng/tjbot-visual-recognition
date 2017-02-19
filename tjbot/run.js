@@ -1,7 +1,7 @@
+const config = require('../config.js')
 const RaspiCam = require('raspicam');
 const VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
 const fs = require('fs');
-const config = require('../config.js')
 
 const vr = new VisualRecognitionV3({
   api_key: config.vrApiKey,
@@ -10,7 +10,7 @@ const vr = new VisualRecognitionV3({
 
 const camera = new RaspiCam({
   mode: "photo",
-  output: "photo/image.jpg",
+  output: config.imagePath,
   encoding: "jpg",
   timeout: 0 // take the picture immediately
 });
@@ -25,16 +25,26 @@ const formatTimestamp = (timestamp) => {
 
 const recognizeCharacter = (imagePath) => {
   const params = {
-    images_file: fs.createReadStream('photo/image.jpg'),
+    images_file: fs.createReadStream(config.imagePath),
     classifier_ids: [config.classifierId],
     threshold: 0
   }; 
 
   vr.classify(params, function(err, res) {
-    if (err)
+    if (err) {
       console.log(err);
-    else
-      console.log(JSON.stringify(res, null, 2));
+    } else {
+      let classes = res.images[0].classifiers[0].classes
+      let maxScore = classes[0].score
+      let recognizedClass = classes[0].class
+      for (let i=1; i<classes.length; i++) {
+        if classes[i].score > maxScore {
+          maxScore = classes[i].score;
+          recognizedClass = classes[i].class;
+        }
+      }
+      console.log("The character is: ", recognizedClass);
+    }
   });
 }
 
