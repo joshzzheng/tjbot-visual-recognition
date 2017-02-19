@@ -13,6 +13,7 @@ camera.on("start", function( err, timestamp ){
 
 camera.on("read", function( err, timestamp, filename ){
   console.log("photo image captured with filename: " + filename );
+  camera.stop();
 });
 
 camera.on("exit", function( timestamp ){
