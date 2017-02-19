@@ -7,14 +7,12 @@ const vr = new VisualRecognitionV3({
   api_key: config.vrApiKey,
   version_date: '2016-05-19'
 });
-console.log("TEST")
-console.log(config.imagePath)
-console.log(config.classifierId);
-console.log("END")
 
+let timestamp = new Date().toISOString();
+let imageFile = config.imagePath + "image_" + timestamp + ".jpg";
 const camera = new RaspiCam({
   mode: "photo",
-  output: config.imagePath,
+  output: imageFile;,
   encoding: "jpg",
   timeout: 0 // take the picture immediately
 });
@@ -29,7 +27,7 @@ const formatTimestamp = (timestamp) => {
 
 const recognizeCharacter = (imagePath) => {
   const params = {
-    images_file: fs.createReadStream(config.imagePath),
+    images_file: fs.createReadStream(imageFile),
     classifier_ids: [config.classifierId],
     threshold: 0
   }; 
