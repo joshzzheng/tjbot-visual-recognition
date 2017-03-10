@@ -46,6 +46,15 @@ const visualRecognition = new VisualRecognitionV3({
 });
 
 /******************************************************************************
+* Initialize Variables
+*******************************************************************************/
+let sesameCharacter = '';
+let pauseDuration = 0;
+let startDialog = false;
+let context = {};
+let watsonResponse = '';
+
+/******************************************************************************
 * Configuring the Microphone
 *******************************************************************************/
 const micParams = { 
@@ -56,27 +65,20 @@ const micParams = {
 }
 const micInstance = mic(micParams);
 const micInputStream = micInstance.getAudioStream();
-
-let pauseDuration = 0;
 micInputStream.on('pauseComplete', ()=> {
   console.log('Microphone paused for', pauseDuration, 'seconds.');
   setTimeout(function() {
-      micInstance.resume();
-      console.log('Microphone resumed.')
+    micInstance.resume();
+    console.log('Microphone resumed.')
   }, Math.round(pauseDuration * 1000)); //Stop listening when speaker is talking
 });
 
 micInstance.start();
 console.log('TJ is listening, you may speak now.');
 
-
 /******************************************************************************
 * Configure Camera
 *******************************************************************************/
-let ms = (new Date()).getTime().toString();
-let imageFile = config.imagePath + "image_" + ms + ".jpg";
-console.log(imageFile);
-
 const camera = new RaspiCam({
   mode: "photo",
   width: 320,
@@ -101,14 +103,18 @@ camera.on("start", function( err, timestamp ){
 
 camera.on("read", function( err, timestamp, filename ){
   console.log("photo image captured with filename: " + filename );
-  recognizeCharacter();
+
+  let ms = (new Date()).getTime().toString();
+  let imageFile = config.imagePath + "image_" + ms + ".jpg";
+  recognizeCharacter(imageFile).then((character) => {
+    sesameCharacter = character;
+  });
   camera.stop();
 });
 
 camera.on("exit", function( timestamp ){
-  console.log("photo child process has exited at " + formatTimestamp(timestamp) );
+  console.log("photo child process has exited at " + formatTimestamp(timestamp));
 });
-
 
 /******************************************************************************
 * Speech To Text
@@ -139,9 +145,9 @@ const getEmotion = (text) => {
 };
 
 /******************************************************************************
-* Get Recognize Character
+* Recognize Character
 *******************************************************************************/
-const recognizeCharacter = () => {
+const recognizeCharacter = (imageFile) => {
   return new Promise((resolve) => {
     const params = {
       images_file: fs.createReadStream(imageFile),
@@ -208,33 +214,31 @@ const speakResponse = (text) => {
 /******************************************************************************
 * Conversation
 ******************************************************************************/
-let start_dialog = false;
-let context = {};
-let watson_response = '';
-
 speakResponse('Hi there, I am awake.');
-textStream.on('data', (user_speech_text) => {
-  user_speech_text = user_speech_text.toLowerCase();
-  console.log('Watson hears: ', user_speech_text);
-  if (user_speech_text.indexOf(attentionWord.toLowerCase()) >= 0) {
-    start_dialog = true;
+textStream.on('data', (userSpeechText) => {
+  userSpeechText = userSpeechText.toLowerCase();
+  console.log('Watson hears: ', userSpeechText);
+  if (userSpeechText.indexOf(attentionWord.toLowerCase()) >= 0) {
+    startDialog = true;
+    camera.start();
   }
 
-  if (start_dialog) {
-    getEmotion(user_speech_text).then((detectedEmotion) => {
+  if (startDialog) {
+    getEmotion(userSpeechText).then((detectedEmotion) => {
       context.emotion = detectedEmotion.emotion;
+      context.character = character;
       conversation.message({
         workspace_id: config.ConWorkspace,
-        input: {'text': user_speech_text},
+        input: {'text': userSpeechText},
         context: context
       }, (err, response) => {
         context = response.context;
-        watson_response =  response.output.text[0];
-        speakResponse(watson_response);
-        console.log('Watson says:', watson_response);
+        watsonResponse =  response.output.text[0];
+        speakResponse(watsonResponse);
+        console.log('Watson says:', watsonResponse);
         if (context.system.dialog_turn_counter == 2) {
           context = {};
-          start_dialog = false;
+          startDialog = false;
         }
       });
     });  
