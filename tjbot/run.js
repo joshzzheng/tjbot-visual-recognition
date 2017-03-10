@@ -3,6 +3,7 @@ const exec = require('child_process').exec;
 const fs = require('fs');
 const mic = require('mic');
 const probe = require('node-ffprobe');
+const raspiCam = require('raspicam');
 
 const SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
 const VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
@@ -80,7 +81,7 @@ console.log('TJ is listening, you may speak now.');
 /******************************************************************************
 * Configure Camera
 *******************************************************************************/
-const camera = new RaspiCam({
+const camera = new raspiCam({
   mode: "photo",
   width: 320,
   height: 240,
