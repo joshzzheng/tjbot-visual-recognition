@@ -217,8 +217,8 @@ const speakResponse = (text) => {
 /******************************************************************************
 * Conversation
 ******************************************************************************/
-speakResponse('Hi there, I am awake.');
 camera.start();
+speakResponse('Hi there, I am awake.');
 textStream.on('data', (userSpeechText) => {
   userSpeechText = userSpeechText.toLowerCase();
   console.log('Watson hears: ', userSpeechText);
