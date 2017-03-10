@@ -55,6 +55,8 @@ let pauseDuration = 0;
 let startDialog = false;
 let context = {};
 let watsonResponse = '';
+let ms = (new Date()).getTime().toString();
+let imageFile = config.imagePath + "image_" + ms + ".jpg";
 
 /******************************************************************************
 * Configuring the Microphone
@@ -106,8 +108,6 @@ camera.on("start", function( err, timestamp ){
 camera.on("read", function( err, timestamp, filename ){
   console.log("photo image captured with filename: " + filename );
 
-  let ms = (new Date()).getTime().toString();
-  let imageFile = config.imagePath + "image_" + ms + ".jpg";
   recognizeCharacter(imageFile).then((character) => {
     sesameCharacter = character;
   });
