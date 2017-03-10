@@ -5,6 +5,7 @@
   "main": "config.example.js",
   "dependencies": {
     "mic": "^2.1.1",
+    "node-ffprobe": "^1.2.2",
     "raspicam": "git+https://github.com/troyth/node-raspicam.git",
     "watson-developer-cloud": "^2.20.1"
   },
