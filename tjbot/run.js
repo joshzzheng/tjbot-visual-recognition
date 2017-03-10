@@ -5,6 +5,7 @@ const mic = require('mic');
 const probe = require('node-ffprobe');
 
 const SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
+const VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
 const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 const ConversationV1 = require('watson-developer-cloud/conversation/v1');
 const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
@@ -18,6 +19,11 @@ const speechToText = new SpeechToTextV1({
   username: config.STTUsername,
   password: config.STTPassword,
   version: 'v1'
+});
+
+const visualRecognition = new VisualRecognitionV3({
+  api_key: config.vrApiKey,
+  version_date: '2016-05-19'
 });
 
 const toneAnalyzer = new ToneAnalyzerV3({
@@ -38,11 +44,6 @@ const textToSpeech = new TextToSpeechV1({
   username: config.TTSUsername,
   password: config.TTSPassword,
   version: 'v1'
-});
-
-const visualRecognition = new VisualRecognitionV3({
-  api_key: config.vrApiKey,
-  version_date: '2016-05-19'
 });
 
 /******************************************************************************
