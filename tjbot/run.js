@@ -203,7 +203,7 @@ const speakResponse = (text) => {
   .pipe(fs.createWriteStream('output.wav'))
   .on('close', () => {
     probe('output.wav', function(err, probeData) {
-      pauseDuration = probeData.format.duration + 0.2;
+      pauseDuration = probeData.format.duration;
       micInstance.pause();
       exec('aplay output.wav', function (error, stdout, stderr) {
         if (error !== null) {
@@ -218,12 +218,12 @@ const speakResponse = (text) => {
 * Conversation
 ******************************************************************************/
 speakResponse('Hi there, I am awake.');
+camera.start();
 textStream.on('data', (userSpeechText) => {
   userSpeechText = userSpeechText.toLowerCase();
   console.log('Watson hears: ', userSpeechText);
   if (userSpeechText.indexOf(attentionWord.toLowerCase()) >= 0) {
     startDialog = true;
-    camera.start();
   }
 
   if (startDialog) {
