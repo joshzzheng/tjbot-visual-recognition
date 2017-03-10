@@ -4,6 +4,7 @@
   "description": "TJBot joins Sesame Street",
   "main": "config.example.js",
   "dependencies": {
+    "mic": "^2.1.1",
     "raspicam": "git+https://github.com/troyth/node-raspicam.git",
     "watson-developer-cloud": "^2.20.1"
   },
