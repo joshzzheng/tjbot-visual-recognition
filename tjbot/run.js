@@ -109,6 +109,7 @@ camera.on("read", function( err, timestamp, filename ){
   console.log("photo image captured with filename: " + filename );
 
   recognizeCharacter(imageFile).then((character) => {
+    console.log(character)
     sesameCharacter = character;
   });
   camera.stop();
@@ -173,16 +174,16 @@ const recognizeCharacter = (imageFile) => {
 
         if (recognizedClass == "elmo") {
           console.log("Hello, Elmo");
-          resolve('Elmo');
+          resolve("Elmo");
         } else if (recognizedClass == "kermit") {
           console.log("Hello, Kermit");
-          resolve('Kermit');
+          resolve("Kermit");
         } else if (recognizedClass == "big_bird") {
           console.log("Hello, Big Bird");
-          resolve('Big Bird');
+          resolve("Big Bird");
         } else {
           console.log("Hello, Cookie Monster");
-          resolve('Cookie Monster');
+          resolve("Cookie Monster");
         }
       }
     })
@@ -228,7 +229,7 @@ textStream.on('data', (userSpeechText) => {
   if (startDialog) {
     getEmotion(userSpeechText).then((detectedEmotion) => {
       context.emotion = detectedEmotion.emotion;
-      context.character = character;
+      context.character = sesameCharacter;
       conversation.message({
         workspace_id: config.ConWorkspace,
         input: {'text': userSpeechText},
