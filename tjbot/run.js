@@ -101,11 +101,11 @@ const formatTimestamp = (timestamp) => {
   return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 }
 
-camera.on("start", function( err, timestamp ){
+camera.on("start", (err, timestamp) => {
   console.log("photo started at " + formatTimestamp(timestamp) );
 });
 
-camera.on("read", function( err, timestamp, filename ){
+camera.on("read", (err, timestamp, filename) => {
   console.log("photo image captured with filename: " + filename );
 
   recognizeCharacter(imageFile).then((character) => {
@@ -115,7 +115,7 @@ camera.on("read", function( err, timestamp, filename ){
   camera.stop();
 });
 
-camera.on("exit", function( timestamp ){
+camera.on("exit", (timestamp) => {
   console.log("photo child process has exited at " + formatTimestamp(timestamp));
 });
 
@@ -158,7 +158,7 @@ const recognizeCharacter = (imageFile) => {
       threshold: 0
     }; 
 
-    visualRecognition.classify(params, function(err, res) {
+    visualRecognition.classify(params, (err, res) => {
       if (err) {
         console.log(err);
       } else {
@@ -175,9 +175,9 @@ const recognizeCharacter = (imageFile) => {
         if (recognizedClass == "elmo") {
           console.log("Hello, Elmo");
           resolve("Elmo");
-        } else if (recognizedClass == "kermit") {
-          console.log("Hello, Kermit");
-          resolve("Kermit");
+        } else if (recognizedClass == "oscar") {
+          console.log("Hello, Oscar");
+          resolve("Oscar");
         } else if (recognizedClass == "big_bird") {
           console.log("Hello, Big Bird");
           resolve("Big Bird");
@@ -202,10 +202,10 @@ const speakResponse = (text) => {
   textToSpeech.synthesize(params)
   .pipe(fs.createWriteStream('output.wav'))
   .on('close', () => {
-    probe('output.wav', function(err, probeData) {
+    probe('output.wav', (err, probeData) => {
       pauseDuration = probeData.format.duration;
       micInstance.pause();
-      exec('aplay output.wav', function (error, stdout, stderr) {
+      exec('aplay output.wav', (error, stdout, stderr) => {
         if (error !== null) {
           console.log('exec error: ' + error);
         }
@@ -218,10 +218,11 @@ const speakResponse = (text) => {
 * Conversation
 ******************************************************************************/
 camera.start();
-speakResponse('Hi there, I am awake.');
-textStream.on('data', (userSpeechText) => {
+speakResponse("Hi there, I am awake.");
+textStream.on("data", (userSpeechText) => {
   userSpeechText = userSpeechText.toLowerCase();
-  console.log('Watson hears: ', userSpeechText);
+  console.log("Watson hears: ", userSpeechText);
+
   if (userSpeechText.indexOf(attentionWord.toLowerCase()) >= 0) {
     startDialog = true;
   }
@@ -232,13 +233,13 @@ textStream.on('data', (userSpeechText) => {
       context.character = sesameCharacter;
       conversation.message({
         workspace_id: config.ConWorkspace,
-        input: {'text': userSpeechText},
+        input: {"text": userSpeechText},
         context: context
       }, (err, response) => {
         context = response.context;
         watsonResponse =  response.output.text[0];
         speakResponse(watsonResponse);
-        console.log('Watson says:', watsonResponse);
+        console.log("Watson says:", watsonResponse);
         if (context.system.dialog_turn_counter == 2) {
           context = {};
           startDialog = false;

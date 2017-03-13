@@ -16,7 +16,7 @@ const camera = new RaspiCam({
   mode: "photo",
   width: 320,
   height: 240,
-  quality: 20,
+  quality: 70,
   output: imageFile,
   encoding: "jpg",
   timeout: 0 // take the picture immediately
@@ -30,6 +30,20 @@ const formatTimestamp = (timestamp) => {
   return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 }
 
+camera.on("start", (err, timestamp) => {
+  console.log("photo started at " + formatTimestamp(timestamp) );
+});
+
+camera.on("read", (err, timestamp, filename) => {
+  console.log("photo image captured with filename: " + filename );
+  recognizeCharacter();
+  camera.stop();
+});
+
+camera.on("exit", (timestamp) => {
+  console.log("photo child process has exited at " + formatTimestamp(timestamp) );
+});
+
 const recognizeCharacter = () => {
   const params = {
     images_file: fs.createReadStream(imageFile),
@@ -37,7 +51,7 @@ const recognizeCharacter = () => {
     threshold: 0
   }; 
 
-  vr.classify(params, function(err, res) {
+  vr.classify(params, (err, res) => {
     if (err) {
       console.log(err);
     } else {
@@ -53,8 +67,8 @@ const recognizeCharacter = () => {
 
       if (recognizedClass == "elmo") {
         console.log("Hello, Elmo");
-      } else if (recognizedClass == "kermit") {
-        console.log("Hello, Kermit");
+      } else if (recognizedClass == "oscar") {
+        console.log("Hello, Oscar");
       } else if (recognizedClass == "big_bird") {
         console.log("Hello, Big Bird");
       } else {
@@ -63,19 +77,5 @@ const recognizeCharacter = () => {
     }
   });
 }
-
-camera.on("start", function( err, timestamp ){
-  console.log("photo started at " + formatTimestamp(timestamp) );
-});
-
-camera.on("read", function( err, timestamp, filename ){
-  console.log("photo image captured with filename: " + filename );
-  recognizeCharacter();
-  camera.stop();
-});
-
-camera.on("exit", function( timestamp ){
-  console.log("photo child process has exited at " + formatTimestamp(timestamp) );
-});
 
 camera.start();
