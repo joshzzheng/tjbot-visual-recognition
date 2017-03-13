@@ -13,7 +13,7 @@ const params = {
   threshold: 0
 };
 
-vr.classify(params, function(err, res) {
+vr.classify(params, (err, res) => {
   if (err)
     console.log(err);
   else
