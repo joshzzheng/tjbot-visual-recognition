@@ -109,7 +109,7 @@ camera.on("read", (err, timestamp, filename) => {
   console.log("photo image captured with filename: " + filename );
 
   recognizeCharacter(imageFile).then((character) => {
-    console.log(character)
+    console.log(character);
     sesameCharacter = character;
   });
   camera.stop();
