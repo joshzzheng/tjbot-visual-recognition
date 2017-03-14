@@ -157,7 +157,7 @@ const recognizeCharacter = (imageFile) => {
       classifier_ids: [config.classifierId],
       threshold: 0
     }; 
-
+    console.log("USING CLASSIFIER: " + config.classifierId);
     visualRecognition.classify(params, (err, res) => {
       if (err) {
         console.log(err);
