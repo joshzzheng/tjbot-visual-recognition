@@ -64,16 +64,8 @@ const recognizeCharacter = () => {
           recognizedClass = classes[i].class;
         }
       }
-
-      if (recognizedClass == "elmo") {
-        console.log("Hello, Elmo");
-      } else if (recognizedClass == "oscar") {
-        console.log("Hello, Oscar");
-      } else if (recognizedClass == "big_bird") {
-        console.log("Hello, Big Bird");
-      } else {
-        console.log("Hello, Cookie Monster");
-      }
+      
+      console.log("Hello, " + recognizedClass);
     }
   });
 }

@@ -172,19 +172,8 @@ const recognizeCharacter = (imageFile) => {
           }
         }
 
-        if (recognizedClass == "elmo") {
-          console.log("Hello, Elmo");
-          resolve("Elmo");
-        } else if (recognizedClass == "oscar") {
-          console.log("Hello, Oscar");
-          resolve("Oscar");
-        } else if (recognizedClass == "big_bird") {
-          console.log("Hello, Big Bird");
-          resolve("Big Bird");
-        } else {
-          console.log("Hello, Cookie Monster");
-          resolve("Cookie Monster");
-        }
+        console.log("Hello, " + recognizedClass);
+        resolve(recognizedClass);
       }
     })
   })
