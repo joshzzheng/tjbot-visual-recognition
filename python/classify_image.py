@@ -12,9 +12,9 @@ def main():
   sdk_vr = VisualRecognitionV3('2016-05-20', api_key=api_key)
 
   with open(join(dirname(__file__), 
-                 '../data/test/elmo.jpg'), 'rb') as elmo:
+                 '../data/test/dracula.jpg'), 'rb') as dracula:
 
-    response = sdk_vr.classify(elmo,
+    response = sdk_vr.classify(dracula,
                         classifier_ids=[classifier_id],
                         threshold=0.1)
 

@@ -11,19 +11,19 @@ def main():
   sdk_vr = VisualRecognitionV3('2016-05-20', api_key=api_key)
 
   with open(join(dirname(__file__), 
-                 '../data/train/elmo.zip'), 'rb') as elmo,\
+                 '../data/train/dracula.zip'), 'rb') as dracula,\
        open(join(dirname(__file__), 
-                 '../data/train/big_bird.zip'), 'rb') as big_bird,\
+                 '../data/train/frankenstein.zip'), 'rb') as frankenstein,\
        open(join(dirname(__file__), 
-                 '../data/train/oscar.zip'), 'rb') as oscar,\
+                 '../data/train/wolfman.zip'), 'rb') as wolfman,\
        open(join(dirname(__file__), 
-                 '../data/train/cookie_monster.zip'), 'rb') as cookie_monster:
+                 '../data/train/mummy.zip'), 'rb') as mummy:
 
-    response = sdk_vr.create_classifier("sesame_street", 
-                        elmo_positive_examples=elmo,
-                        big_bird_positive_examples=big_bird,
-                        oscar_positive_examples=oscar,
-                        cookie_monster_positive_examples=cookie_monster);
+    response = sdk_vr.create_classifier("monsters", 
+                        dracula_positive_examples=dracula,
+                        frankenstein_positive_examples=frankenstein,
+                        wolfman_positive_examples=wolfman,
+                        mummy_positive_examples=mummy);
 
     pprint(response)
 

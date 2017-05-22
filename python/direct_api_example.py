@@ -113,7 +113,7 @@ def main():
       'cookie_monster_positive_examples': cookie_monster
     }
 
-    response = my_vr.create_classifier(api_key, "sesame_street", class_files)
+    response = my_vr.create_classifier(api_key, "monsters", class_files)
 
     pprint(response)
 
