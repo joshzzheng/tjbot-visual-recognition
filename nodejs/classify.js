@@ -8,7 +8,7 @@ const vr = new VisualRecognitionV3({
 });
 
 const params = {
-  images_file: fs.createReadStream('../data/test/bigBird.png'),
+  images_file: fs.createReadStream('../data/test/dracula.png'),
   classifier_ids: [config.classifierId],
   threshold: 0
 };

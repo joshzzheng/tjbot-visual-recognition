@@ -50,7 +50,7 @@ const textToSpeech = new TextToSpeechV1({
 /******************************************************************************
 * Initialize Variables
 *******************************************************************************/
-let sesameCharacter = '';
+let monster = '';
 let pauseDuration = 0;
 let startDialog = false;
 let context = {};
@@ -110,7 +110,7 @@ camera.on("read", (err, timestamp, filename) => {
 
   recognizeCharacter(imageFile).then((character) => {
     console.log(character);
-    sesameCharacter = character;
+    monster = character;
   });
   camera.stop();
 });
@@ -220,7 +220,7 @@ textStream.on("data", (userSpeechText) => {
   if (startDialog) {
     getEmotion(userSpeechText).then((detectedEmotion) => {
       context.emotion = detectedEmotion.emotion;
-      context.character = sesameCharacter;
+      context.character = monster;
       conversation.message({
         workspace_id: config.ConWorkspace,
         input: {"text": userSpeechText},
